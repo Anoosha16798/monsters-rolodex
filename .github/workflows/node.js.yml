@@ -1,0 +1,28 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        url: ["remoteurl or path"]
+        server-path: ["Please/replace/your/path"]
+        remote-username: ["replaceyourusername"]
+
+    steps:
+    - name: testing custom ssh push
+      uses: easingthemes/ssh-deploy@v2.1.4
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.replacewithyoursecratename }}
+        REMOTE_HOST: ${{ matrix.url }}
+        REMOTE_USER: ${{ matrix.remote-username }}
+        REMOTE_PORT: 22
+        SOURCE: ${{ matrix.local-path }}
+        TARGET: ${{ matrix.server-path }}
